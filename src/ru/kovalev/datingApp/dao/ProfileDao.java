@@ -29,7 +29,7 @@ public class ProfileDao {
         return Optional.ofNullable(storage.get(id));
     }
 
-    // TODO delete, update,findAll
+    // delete, update,findAll
 
     public List<Profile> findAll(){
         return new ArrayList<>(storage.values());

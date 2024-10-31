@@ -24,7 +24,7 @@ public class ProfileService {
         return dao.findById(id);
     }
 
-    //TODO delete, update, findAll
+    // delete, update, findAll
 
     public List<Profile> findAll(){
         return new ArrayList<>(dao.findAll());
