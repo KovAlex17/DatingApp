@@ -30,11 +30,11 @@ public class ProfileService {
         return new ArrayList<>(dao.findAll());
     }
 
-    void update(Profile profile){
+    public void update(Profile profile){
         dao.update(profile);
     }
 
-    boolean delete(Long id){
+    public boolean delete(Long id){
         if(id == null) return false;
         return dao.delete(id);
     }
