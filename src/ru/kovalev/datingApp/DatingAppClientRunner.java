@@ -1,25 +1,21 @@
 package ru.kovalev.datingApp;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.net.Socket;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
 
 public class DatingAppClientRunner {
     public static void main(String[] args) throws IOException, InterruptedException {
 
-        try(HttpClient httpClient = HttpClient.newBuilder().version(HttpClient.Version.HTTP_1_1).build();){
+        try(HttpClient httpClient = HttpClient.newBuilder().version(HttpClient.Version.HTTP_1_1).build()){
 
             HttpRequest request = HttpRequest.newBuilder(URI.create("http://yandex.ru"))
-                    .setHeader("My-Token", "uhrfhrf7i")
-                    .GET()
+                    .setHeader("My-Token", "4354-5674-0530-2859")
+                    .POST(HttpRequest.BodyPublishers.ofString("message for post"))
                     .build();
 
             HttpResponse<String> httpResponse = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
