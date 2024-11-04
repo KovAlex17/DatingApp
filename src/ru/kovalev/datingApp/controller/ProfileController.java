@@ -3,8 +3,8 @@ package ru.kovalev.datingApp.controller;
 import ru.kovalev.datingApp.model.Profile;
 import ru.kovalev.datingApp.service.ProfileService;
 
+import java.util.List;
 import java.util.Optional;
-
 import static java.lang.Long.parseLong;
 
 public class ProfileController {
@@ -21,7 +21,6 @@ public class ProfileController {
 
     public String save(String save) {
         String[] params = save.split(",");
-
         if (params.length < 4) return "Bad request: need 4 parameters for save profile.";
 
         Profile profile = new Profile();
@@ -33,25 +32,11 @@ public class ProfileController {
         return service.save(profile).toString();
     }
 
-    public String findById(String request){
-        String[] strings = request.split(",");
-        if (strings.length != 1) return "Bad request: need 1 number parameter.";
-
-        long id;
-        try {
-            id = parseLong(strings[0]);
-        } catch (NumberFormatException e){
-            return "Bad request: can't parse string [" + strings[0] + "] to long.";
-        }
-
-        Optional<Profile> maybeProfile = service.findById(id);
-
-        if(maybeProfile.isEmpty()) return "Not found.";
-
-        return maybeProfile.get().toString();
+    public Optional<Profile> findById(Long id){
+        return service.findById(id);
     }
 
-    public String findAll(){return service.findAll().toString();}
+    public List<Profile> findAll(){return service.findAll();}
 
     public String update(String request){
         String[] strings = request.split(",");

@@ -1,22 +1,20 @@
 package ru.kovalev.datingApp;
 
+import ru.kovalev.datingApp.controller.LikeController;
 import ru.kovalev.datingApp.controller.ProfileController;
 import ru.kovalev.datingApp.dao.ProfileDao;
 import ru.kovalev.datingApp.service.ProfileService;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
 
-import static ru.kovalev.datingApp.model.Commands.*;
+
 
 public class DatingAppServerRunner {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 
-        ProfileController controller = new ProfileController(new ProfileService(new ProfileDao()));
-        DatingAppHttpServer server = new DatingAppHttpServer(5);
+        ProfileController profileController = new ProfileController(new ProfileService(new ProfileDao()));
+        LikeController likeController = new LikeController();
+
+        DatingAppHttpServer server = new DatingAppHttpServer(8080, 5, profileController, likeController);
         server.start();
 
     }
