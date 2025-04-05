@@ -16,7 +16,7 @@ public class ProfileDao {
 
     public ProfileDao() {
         this.storage = new ConcurrentHashMap<>();
-        this.idStorage = new AtomicLong();
+        this.idStorage = new AtomicLong(1L);
     }
 
     public Profile save(Profile profile) {
