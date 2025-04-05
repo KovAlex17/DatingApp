@@ -1,6 +1,6 @@
-package ru.kovalev.datingApp.controller;
+package ru.kovalev.datingApp.back.controller;
 
-import ru.kovalev.datingApp.service.ProfileService;
+import ru.kovalev.datingApp.back.service.ProfileService;
 
 public class ProfileController {
     private final ProfileService service;
@@ -9,7 +9,5 @@ public class ProfileController {
         this.service = service;
     }
 
-    public String work(String request){
 
-    }
 }

@@ -1,4 +1,4 @@
-package ru.kovalev.datingApp.model;
+package ru.kovalev.datingApp.back.model;
 
 public class Profile {
     private Long id;

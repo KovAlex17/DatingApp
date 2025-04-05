@@ -1,7 +1,7 @@
-package ru.kovalev.datingApp.service;
+package ru.kovalev.datingApp.back.service;
 
-import ru.kovalev.datingApp.dao.ProfileDao;
-import ru.kovalev.datingApp.model.Profile;
+import ru.kovalev.datingApp.back.dao.ProfileDao;
+import ru.kovalev.datingApp.back.model.Profile;
 
 import java.util.List;
 import java.util.Optional;
