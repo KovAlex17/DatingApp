@@ -1,78 +1,38 @@
 package ru.kovalev.datingApp.back.controller;
 
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import ru.kovalev.datingApp.back.model.Profile;
 import ru.kovalev.datingApp.back.service.ProfileService;
 
+import java.io.IOException;
 import java.util.Optional;
 
-public class ProfileController {
-    private final ProfileService service;
 
-    public ProfileController(ProfileService service) {
-        this.service = service;
-    }
+@WebServlet("/profile")
+public class ProfileController extends HttpServlet {
+    private final ProfileService service = ProfileService.getInstance(); // В сервлете не может быть конструктора
 
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-    public String save(String save) {
-        String[] params = save.split(",");
+        String id = req.getParameter("id");
+        String forwardUri = "/notFound";
 
-        if(params.length < 4) return "bad request";
+        if(id != null){
+            Optional<Profile> optional =  service.findById(Long.parseLong(id));
 
-        Profile profile = new Profile();
-        profile.setEmail(params[0]);
-        profile.setName(params[1]);
-        profile.setSurname(params[2]);
-        profile.setAbout(params[3]);
+            if(optional.isPresent()){
 
-        return service.save(profile).toString();
-    }
+                req.setAttribute("profile", optional.get()); //поместили в атрибут profile наш профиль // это ассоц.массив, по ключу profile можем положить в него все что хотим // у всех параметров запросу и ответа есть атрибуты
 
-    public Optional<Profile> findById(Long id) {
-        return service.findById(id);
-    }
-
-    public String findAll() {
-        return service.findAll().toString();
-    }
-
-    public String update(String request) {
-        String[] strings = request.split(",");
-        if (strings.length != 5) return "Bad request: need 5 parameters to update profile.";
-
-        long id;
-        try {
-            id = Long.parseLong(strings[0]);
-        } catch (NumberFormatException e) {
-            return "Bad request: can`t parse string [" + strings[0] + "] to long.";
+                forwardUri = "/WEB-INF/jsp/profile.jsp";
+            }
         }
 
-        Profile profile = new Profile();
-        profile.setId(id);
-        profile.setEmail(strings[1]);
-        profile.setName(strings[2]);
-        profile.setSurname(strings[3]);
-        profile.setAbout(strings[4]);
-
-        service.update(profile);
-
-        return "Update success";
-    }
-
-    public String delete(String request) {
-        String[] strings = request.split(",");
-        if (strings.length != 1) return "Bad request: need one number parameter";
-
-        long id;
-        try {
-            id = Long.parseLong(strings[0]);
-        } catch (NumberFormatException e) {
-            return "Bad request: can`t parse string [" + strings[0] + "] to long.";
-        }
-
-        boolean result = service.delete(id);
-
-        if (!result) return "Not found";
-
-        return "Delete success";
+        req.getRequestDispatcher(forwardUri).forward(req, resp);
     }
 }
