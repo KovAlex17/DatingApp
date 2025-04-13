@@ -1,5 +1,6 @@
 package ru.kovalev.datingApp.back.dao;
 
+import ru.kovalev.datingApp.back.model.Gender;
 import ru.kovalev.datingApp.back.model.Profile;
 
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ public class ProfileDao {
         profile.setName("Ivan");
         profile.setSurname("Ivanov");
         profile.setAbout("I am QA");
+        profile.setGender(Gender.MALE);
         this.storage.put(1L, profile);
         Profile profile1 = new Profile();
         profile1.setId(2L);
@@ -36,8 +38,9 @@ public class ProfileDao {
         profile1.setName("Elena");
         profile1.setSurname("Sidorova");
         profile1.setAbout("I am Java Dev");
+        profile1.setGender(Gender.FEMALE);
         this.storage.put(2L, profile1);
-        this.idStorage = new AtomicLong(1L);
+        this.idStorage = new AtomicLong(3L);
     }
 
     public static ProfileDao getInstance() {
